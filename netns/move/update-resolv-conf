@@ -49,10 +49,21 @@ case "$script_type" in
         	R="${R}nameserver $NS
 "
 	done
-	echo -n "$R" | /sbin/resolvconf -a "${dev}.openvpn"
+	NETNS=$(ip netns identify)
+	if [[ -n "$NETNS" ]]; then
+		mkdir -p /etc/netns/vpn/
+		echo -n "$R" > /etc/netns/vpn/resolv.conf
+	else
+		echo -n "$R" | /sbin/resolvconf -a "${dev}.openvpn"
+	fi
 	;;
   down)
-	/sbin/resolvconf -d "${dev}.openvpn"
+	NETNS=$(ip netns identify)
+	if [[ -n "$NETNS" ]]; then
+		rm /etc/netns/vpn/resolv.conf
+		rmdir -p /etc/netns/vpn --ignore-fail-on-non-empty
+	else
+		/sbin/resolvconf -d "${dev}.openvpn"
+	fi
 	;;
 esac
-
