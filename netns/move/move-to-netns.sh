@@ -28,6 +28,6 @@ down() { true; }
 "$script_type" "$@"
 
 # update DNS servers in netns
-if [ -x /etc/openvpn/update-resolv-conf ]; then
-    ip netns exec vpn /etc/openvpn/update-resolv-conf "$@"
+if [ -x ./update-resolv-conf ]; then
+    ip netns exec vpn ./update-resolv-conf "$@"
 fi
