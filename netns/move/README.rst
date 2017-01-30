@@ -46,7 +46,8 @@ vpnbox command
 Shortcut:
 
 .. code-block:: bash
-    :caption: /usr/local/bin/vpnbox
+
+    # /usr/local/bin/vpnbox
 
     #! /bin/sh
     sudo ip netns exec vpn sudo -u "$(whoami)" -- "$@"
@@ -54,7 +55,8 @@ Shortcut:
 Command completion:
 
 .. code-block:: bash
-    :caption: ~/.zshrc
+
+    # ~/.zshrc
 
     compdef _precommand vpnbox
 
@@ -65,7 +67,8 @@ Execute ``sudo visudo`` and add the following to allow starting programs in
 the netns without having to enter a password:
 
 .. code-block:: bash
-    :caption: /etc/sudoers
+
+    # /etc/sudoers
 
     # put this near the end of the file:
     alice ALL=(ALL:ALL) NOPASSWD: /usr/bin/ip netns exec vpn sudo -u alice -- *
@@ -78,7 +81,8 @@ First setup a new profile called *vpn* using ``firefox -p``.
 Then add a command like this to start the profile in a tunneled instance:
 
 .. code-block:: bash
-    :caption: /usr/local/bin/foxtunnel
+
+    # /usr/local/bin/foxtunnel
 
     #! /bin/sh
     vpnbox firefox -P vpn --no-remote --private-window "${1-http://ipecho.net/plain}"
